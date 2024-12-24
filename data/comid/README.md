@@ -81,4 +81,3 @@ Used to store **public keys** associated with an environment. This is essential 
 
 ### 5 High Level Structure for CoMID Templates
 
-![CoMID Template Structure](https://drive.google.com/file/d/1b6lURF52BOqU569APLQj6PwAEN_qSGJv/view?usp=sharing)
