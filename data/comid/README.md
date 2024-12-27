@@ -69,7 +69,7 @@ Used to store **public keys** associated with an environment. This is essential 
 |:------------------:|:------:|:----------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------:|
 | environment        | Object | Contains class and optionally instance, layer, index.                              | See 3.1 Environment.                                                                          |
 | measurements       | Array  | List of measurement objects.                                                       | [ { "key": { ... }, "value": { ... } } ]                                                      |
-| measurements.key   | Object | Identifies the measured component. Could be a psa.refval-id, cca.platform-config-id, etc. | { "type": "psa.refval-id", "value": { "label": "BL", "version": "2.1.0", ... } }              |
+| measurements.key   | Object | Identifies the measurement. Could be a psa.refval-id, cca.platform-config-id, etc. | { "type": "psa.refval-id", "value": { "label": "BL", "version": "2.1.0", ... } }              |
 | measurements.value | Object | Holds the actual measurement data.                                                 | { "digests": ["sha-256:..."] }, or { "raw-value": { "type": "bytes", "value": "..." } }, etc. |
 
 ### 4.3 Attester-Verification-Key Fields
@@ -184,7 +184,6 @@ Below are the **seven** template files, each highlighting different aspects of C
 }
 ``` 
 
-</details>
 
 **Key Points**
 
@@ -669,4 +668,5 @@ Below are the **seven** template files, each highlighting different aspects of C
 
 
 ### 7 Lifecycle of a CoMID Templates
-![CoMID_Lifecycle](../../data/pics/comid life.png)
+
+![CoMID_Lifecycle](../../data/pics/comidLife.png)
