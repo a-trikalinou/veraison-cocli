@@ -1,12 +1,12 @@
 # CoRIM Template Format
 
-## 1. Introduction
+##  Introduction
 
 **CoRIM** stands for **Concise Reference Integrity Manifest**, a structured format for describing reference integrity information, such as profiles, validity windows, entities, and dependent reference integrity manifests (RIMs). CoRIM can be leveraged in **remote attestation** scenarios, where it provides crucial metadata enabling **Verifiers** to evaluate trust in an **Attester** (e.g., a device or platform).
 
-## 2. Conceptual Overview
+##  Conceptual Overview
 
-### 2.1 What Is CoRIM?
+###  What Is CoRIM?
 
 CoRIM is a **data model** that captures the high-level attributes of a reference integrity manifest, which might include:
 
@@ -15,15 +15,15 @@ CoRIM is a **data model** that captures the high-level attributes of a reference
 -   **Entity** metadata describing organizations or roles in the manifest’s lifecycle.
 -   **Dependent RIMs** that describe or reference additional manifests.
 
-### 2.2 CoRIM in the RATS Architecture
+###  CoRIM in the RATS Architecture
 
-In the **IETF RATS architecture** ([RFC9334]), a **Verifier** appraises **Evidence** (the Attester’s state claims) against **Reference Values** or **Endorsements** (often created or authorized by an Endorser). CoRIM can be used:
+In the **IETF RATS architecture** ([RFC9334](https://rfc-editor.org/rfc/rfc9334)), a **Verifier** appraises **Evidence** (the Attester’s state claims) against **Reference Values** or **Endorsements** (often created or authorized by an Endorser). CoRIM can be used:
 
 -   **As a container for Reference Values**: A CoRIM can describe what valid states or configurations look like (e.g., version info, cryptographic digests).
 -   **As part of an Endorsement**: Some Endorsers may package CoRIM data as “static claims” about a platform or firmware.
 -   **To link multiple RIMs**: CoRIM’s `dependent-rims` field can chain or reference external manifests, aligning with the multi-layer approach in RATS.
 
-## 3 Template Structure
+##  Template Structure
 
 A **CoRIM template** is frequently represented in JSON for **human-friendly editing**. At a minimum, it includes `corim-id` (a unique identifier). Optional fields like `profile`, `validity`, and `entities` provide deeper context:
 
@@ -40,7 +40,7 @@ A **CoRIM template** is frequently represented in JSON for **human-friendly edit
 }
 ``` 
 
-### 3.1 Top-Level Fields
+###  Top-Level Fields
 
 -   **corim-id** (String/UUID): A globally unique identifier for the CoRIM.
 -   **profile** (String, optional): A URI referencing a particular standard (e.g., PSA, CCA).
@@ -48,9 +48,9 @@ A **CoRIM template** is frequently represented in JSON for **human-friendly edit
 -   **entities** (Array, optional): An array of organizations or roles involved.
 -   **dependent-rims** (Array, optional): An array referencing other RIMs or manifest resources.
 
-## 4 Key Components
+##  Key Components
 
-### 4.1 Profile
+###  Profile
 
 -   **Type**: `String (URI)`
 -   **Examples**:
@@ -59,14 +59,14 @@ A **CoRIM template** is frequently represented in JSON for **human-friendly edit
 
 This field associates the manifest with a specific specification or profile.
 
-### 4.2 Validity
+### Validity
 
 -   **Type**: `Object`
 -   **Fields**:
     -   `not-before`: The earliest valid timestamp for using this manifest.
     -   `not-after`: The expiry timestamp after which the manifest is invalid.
 
-### 4.3 Entities
+###  Entities
 
 -   **Type**: `Array of Objects`
 -   **Purpose**: Identifies the organizations or individuals related to the manifest (e.g., “manifestCreator”).
@@ -75,7 +75,7 @@ This field associates the manifest with a specific specification or profile.
     -   `regid`: A registration/domain identifier (e.g., `acme.example`).
     -   `roles`: Array of roles (e.g., `[ "manifestCreator" ]`).
 
-### 4.4 Dependent RIMs (Optional)
+###  Dependent RIMs (Optional)
 
 -   **Type**: `Array of Objects`
 -   **Purpose**: Points to other reference integrity manifests or external references.
@@ -85,9 +85,9 @@ This field associates the manifest with a specific specification or profile.
 
 ----------
 
-## 5. Field-by-Field Explanation
+##  Field-by-Field Explanation
 
-### 5.1 Global Fields
+###  Global Fields
 
 |      Field     |       Type       |                           Description                          |                          Example                         |   |   |
 |:--------------:|:----------------:|:--------------------------------------------------------------:|:--------------------------------------------------------:|---|---|
@@ -97,7 +97,7 @@ This field associates the manifest with a specific specification or profile.
 | entities       | Array (optional) | Lists organizations and roles.                                 | [{ "name": "ACME Ltd.", "regid": "acme.example", ... }]  |   |   |
 | dependent-rims | Array            | Zero or more references to external RIMs.                      | [{"href": "...", "thumbprint": "sha-256:..."}]           |   |   |
 
-### 5.2 Meta Fields
+###  Meta Fields
 
 Often, separate **meta** files store supplementary data, such as **signer** information, which can be combined with a CoRIM for extended usage:
 
@@ -108,11 +108,28 @@ Often, separate **meta** files store supplementary data, such as **signer** info
 
 ----------
 
-## 6. Full Examples and Walkthroughs
+###  High Level Structure for CoRIM Templates
+
+```mermaid
+graph TD
+    A[CoMID Template] --> B[Global Fields]
+    A --> C[Triples]
+    B --> B1[lang]
+    B --> B2[tag-identity]
+    B --> B3[entities]
+    C --> C1[Reference Values]
+    C --> C2[Attester Verification Keys]
+    C1 --> C1a[Environment]
+    C1 --> C1b[Measurements]
+    C2 --> C2a[Environment]
+    C2 --> C2b[Verification Keys]
+```
+
+##  Full Examples and Walkthroughs
 
 We have six JSON files that demonstrate various CoRIM states:
 
-### 6.1 corim-cca-realm.json
+###  corim-cca-realm.json
 
 ```
 {
@@ -136,7 +153,7 @@ We have six JSON files that demonstrate various CoRIM states:
 
 -   Demonstrates **CCA Realm** profile, a standard validity window, and basic entity info.
 
-### 6.2 corim-cca.json
+### corim-cca.json
 
 ```
 {
@@ -159,7 +176,7 @@ We have six JSON files that demonstrate various CoRIM states:
 ```
 -   Targets a **CCA SSD** profile with similar structure to the `corim-cca-realm.json`.
 
-### 6.3 corim-full.json
+###  corim-full.json
 
 ```
 {
@@ -190,7 +207,7 @@ We have six JSON files that demonstrate various CoRIM states:
 -   Includes a **dependent-rims** array referencing another RIM by `href` and `thumbprint`.
 -   Shows `profile` for a **PSA IoT** specification.
 
-### 6.4 corim-mini.json
+###  corim-mini.json
 
 
 ```
@@ -201,7 +218,7 @@ We have six JSON files that demonstrate various CoRIM states:
 
 -   **Minimal** CoRIM: only the required `corim-id` is present.
 
-### 6.5 meta-cca.json
+###  meta-cca.json
 
 ```
 {
@@ -218,7 +235,7 @@ We have six JSON files that demonstrate various CoRIM states:
 
 -   A **meta** file providing `signer` details and a separate validity window.
 
-### 6.6 meta-mini.json
+###  meta-mini.json
 ```
 {
   "signer": {
