@@ -112,83 +112,9 @@ Below are the **seven** template files, each highlighting different aspects of C
 -   **Raw Values**: Includes raw byte values for platform configuration.
 
 ###  comid-cca-realm-refval.json
-```
-{
-  "lang": "en-GB",
-  "tag-identity": {
-    "id": "43BBE37F-2E61-4B33-AED3-53CFF1428B16",
-    "version": 0
-  },
-  "entities": [
-    {
-      "name": "Workload Client Ltd.",
-      "regid": "https://workloadclient.example",
-      "roles": [
-        "tagCreator",
-        "creator",
-        "maintainer"
-      ]
-    }
-  ],
-  "triples": {
-    "reference-values": [
-      {
-        "environment": {
-          "class": {
-            "id": {
-              "type": "uuid",
-              "value": "CD1F0E55-26F9-460D-B9D8-F7FDE171787C"
-            },
-            "vendor": "Workload Client Ltd"
-          },
-          "instance": {
-            "type": "bytes",
-            "value": "QoS1aUymwNLPR4mguVrIAlyBjeUjBDZL580pgbLS7caFsyInfsJYGZYkE9jJssH1"
-          }
-        },
-        "measurements": [
-          {
-            "value": {
-              "integrity-registers": {
-                "rim": {
-                  "key-type": "text",
-                  "value": [
-                    "sha-384;QoS1aUymwNLPR4mguVrIAlyBjeUjBDZL580pgbLS7caFsyInfsJYGZYkE9jJssH1"
-                  ]
-                },
-                "rem0": {
-                  "key-type": "text",
-                  "value": [
-                    "sha-384;IQe752H8pS2VE2oTVNt6TdV7Gya+DT2nHZ6yOYazS6YVq/ZRTPNeWp6lWgMtBop4"
-                  ]
-                },
-                "rem1": {
-                  "key-type": "text",
-                  "value": [
-                    "sha-384;JQe752H8pS2VE2oTVNt6TdV7Gya+DT2nHZ6yOYazS6YVq/ZRTPNeWp6lWgMtBop4"
-                  ]
-                },
-                "rem2": {
-                  "key-type": "text",
-                  "value": [
-                    "sha-384;MQe752H8pS2VE2oTVNt6TdV7Gya+DT2nHZ6yOYazS6YVq/ZRTPNeWp6lWgMtBop4"
-                  ]
-                },
-                "rem3": {
-                  "key-type": "text",
-                  "value": [
-                    "sha-384;NQe752H8pS2VE2oTVNt6TdV7Gya+DT2nHZ6yOYazS6YVq/ZRTPNeWp6lWgMtBop4"
-                  ]
-                }
-              }
-            }
-          }
-        ]
-      }
-    ]
-  }
-}
-``` 
+
+[comid-cca-realm-refval.json](https://github.com/veraison/cocli/blob/0d8fae8210ae527589792de2fba54442302380f7/data/comid/templates/comid-cca-mult-refval.json#L1-L93)
+
 **Key Points**
 
 -   **UUID Identifiers**: Utilizes `uuid` type for environment identifiers, ensuring uniqueness.
@@ -198,56 +124,8 @@ Below are the **seven** template files, each highlighting different aspects of C
 -   **Software Version Number (svn)**: Specifies software versioning with exact values.
 
 ###  comid-cca-refval.json
-``` 
-{
-  "lang": "en-GB",
-  "tag-identity": {
-    "id": "43BBE37F-2E61-4B33-AED3-53CFF1428B16",
-    "version": 0
-  },
-  "entities": [
-    {
-      "name": "ACME Ltd.",
-      "regid": "https://acme.example",
-      "roles": [
-        "tagCreator",
-        "creator",
-        "maintainer"
-      ]
-    }
-  ],
-  "triples": {
-    "reference-values": [
-      {
-        "environment": {
-          "class": {
-            "id": {
-              "type": "psa.impl-id",
-              "value": "YWNtZS1pbXBsZW1lbnRhdGlvbi1pZC0wMDAwMDAwMDE="
-            },
-            "vendor": "ACME",
-            "model": "RoadRunner"
-          }
-        },
-        "measurements": [
-          {
-            "key": {
-              "type": "cca.platform-config-id",
-              "value": "cfg v1.0.0"
-            },
-            "value": {
-              "raw-value": {
-                "type": "bytes",
-                "value": "cmF3dmFsdWUKcmF3dmFsdWUK"
-              }
-            }
-          }
-        ]
-      }
-    ]
-  }
-}
-``` 
+
+[comid-cca-realm-refval.json](https://github.com/veraison/cocli/blob/0d8fae8210ae527589792de2fba54442302380f7/data/comid/templates/comid-cca-mult-refval.json#L1-L93)
 
 **Key Points**
 
@@ -259,78 +137,7 @@ Below are the **seven** template files, each highlighting different aspects of C
 
 ###  comid-dice-refval.json
 
-```
-{
-  "tag-identity": {
-    "id": "1D5A8C7C-1C70-4C56-937E-3C5713AE5A83"
-  },
-  "triples": {
-    "reference-values": [
-      {
-        "environment": {
-          "class": {
-            "id": {
-              "type": "uuid",
-              "value": "DD6661F0-0928-4401-966B-589EA74E3272"
-            },
-            "model": "FMC",
-            "layer": 0,
-            "index": 0
-          }
-        },
-        "measurements": [
-          {
-            "value": {
-              "op-flags": [
-                "notSecure",
-                "debug"
-              ],
-              "digests": [
-                "sha-256:RKozavTLFKh5Qy5T3WVxx/qbzK+3X0iCWSYtbqOk2Rs="
-              ],
-              "svn": {
-                "type": "exact-value",
-                "value": 10
-              }
-            }
-          }
-        ]
-      },
-      {
-        "environment": {
-          "class": {
-            "id": {
-              "type": "uuid",
-              "value": "FFDA7CF3-2333-4A91-99A8-068626203ACA"
-            },
-            "model": "L1",
-            "layer": 1,
-            "index": 0
-          }
-        },
-        "measurements": [
-          {
-            "value": {
-              "op-flags": [
-                "notSecure",
-                "debug"
-              ],
-              "digests": [
-                "sha-256:h0KPxSKAPTEGXnvOPPA/5HUJZjHl4Hu9eg/eYMTPJcc=",
-                "sha-256:VgXOanU71cskR7hhl418y0an8zsD772wLJYg2o6awD0="
-              ],
-              "svn": {
-                "type": "exact-value",
-                "value": 2
-              }
-            }
-          }
-        ]
-      }
-    ]
-  }
-}
-``` 
+[comid-cca-realm-refval.json](https://github.com/veraison/cocli/blob/0d8fae8210ae527589792de2fba54442302380f7/data/comid/templates/comid-cca-mult-refval.json#L1-L93)
 
 **Key Points**
 
@@ -342,74 +149,8 @@ Below are the **seven** template files, each highlighting different aspects of C
 
 ###  comid-psa-iakpub.json
 
-``` 
-{
-  "lang": "en-GB",
-  "tag-identity": {
-    "id": "366D0A0A-5988-45ED-8488-2F2A544F6242",
-    "version": 0
-  },
-  "entities": [
-    {
-      "name": "ACME Ltd.",
-      "regid": "https://acme.example",
-      "roles": [
-        "tagCreator",
-        "creator",
-        "maintainer"
-      ]
-    }
-  ],
-  "triples": {
-    "attester-verification-keys": [
-      {
-        "environment": {
-          "class": {
-            "id": {
-              "type": "psa.impl-id",
-              "value": "YWNtZS1pbXBsZW1lbnRhdGlvbi1pZC0wMDAwMDAwMDE="
-            },
-            "vendor": "ACME",
-            "model": "RoadRunner"
-          },
-          "instance": {
-            "type": "ueid",
-            "value": "Ac7rrnuJJ6MiflMDz14PH3s0u1Qq1yUKwD+83jbsLxUI"
-          }
-        },
-        "verification-keys": [
-          {
-            "type": "pkix-base64-key",
-            "value": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEFn0taoAwR3PmrKkYLtAsD9o05KSM6mbgfNCgpuL0g6VpTHkZl73wk5BDxoV7n+Oeee0iIqkW3HMZT3ETiniJdg==\n-----END PUBLIC KEY-----"
-          }
-        ]
-      },
-      {
-        "environment": {
-          "class": {
-            "id": {
-              "type": "psa.impl-id",
-              "value": "YWNtZS1pbXBsZW1lbnRhdGlvbi1pZC0wMDAwMDAwMDE="
-            },
-            "vendor": "ACME",
-            "model": "RoadRunner"
-          },
-          "instance": {
-            "type": "ueid",
-            "value": "AUyj5PUL8kjDl4cCDWj/0FyIdndRvyZFypI/V6mL7NKW"
-          }
-        },
-        "verification-keys": [
-          {
-            "type": "pkix-base64-key",
-            "value": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE6Vwqe7hy3O8Ypa+BUETLUjBNU3rEXVUyt9XHR7HJWLG7XTKQd9i1kVRXeBPDLFnfYru1/euxRnJM7H9UoFDLdA==\n-----END PUBLIC KEY-----"
-          }
-        ]
-      }
-    ]
-  }
-}
-``` 
+[comid-cca-realm-refval.json](https://github.com/veraison/cocli/blob/0d8fae8210ae527589792de2fba54442302380f7/data/comid/templates/comid-cca-mult-refval.json#L1-L93)
+
 **Key Points**
 
 -   **Public Keys for Attestation**: Stores two **verification-keys** under different **instances** (`ueid`: Unique Entity Identifier), enabling attesters to verify measurements or claims.
@@ -417,75 +158,10 @@ Below are the **seven** template files, each highlighting different aspects of C
 -   **Consistent Environment Class**: Both verification keys are associated with the same `class` (`psa.impl-id`, `vendor`, `model`), indicating they belong to the same hardware or firmware class.
 -   **Unique Instances**: Differentiates verification keys using unique `ueid` values, allowing multiple keys per environment.
 
-### 6.6 comid-psa-integ-iakpub.json
-```
-{
-  "lang": "en-GB",
-  "tag-identity": {
-    "id": "366D0A0A-5988-45ED-8488-2F2A544F6242",
-    "version": 0
-  },
-  "entities": [
-    {
-      "name": "ACME Ltd.",
-      "regid": "https://acme.example",
-      "roles": [
-        "tagCreator",
-        "creator",
-        "maintainer"
-      ]
-    }
-  ],
-  "triples": {
-    "attester-verification-keys": [
-      {
-        "environment": {
-          "class": {
-            "id": {
-              "type": "psa.impl-id",
-              "value": "YWNtZS1pbXBsZW1lbnRhdGlvbi1pZC0wMDAwMDAwMDE="
-            },
-            "vendor": "ACME",
-            "model": "RoadRunner"
-          },
-          "instance": {
-            "type": "ueid",
-            "value": "Ac7rrnuJJ6MiflMDz14PH3s0u1Qq1yUKwD+83jbsLxUI"
-          }
-        },
-        "verification-keys": [
-          {
-            "type": "pkix-base64-key",
-            "value": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEMKBCTNIcKUSDii11ySs3526iDZ8A\niTo7Tu6KPAqv7D7gS2XpJFbZiItSs3m9+9Ue6GnvHw/GW2ZZaVtszggXIw==\n-----END PUBLIC KEY-----"
-          }
-        ]
-      },
-      {
-        "environment": {
-          "class": {
-            "id": {
-              "type": "psa.impl-id",
-              "value": "YWNtZS1pbXBsZW1lbnRhdGlvbi1pZC0wMDAwMDAwMDE="
-            },
-            "vendor": "ACME",
-            "model": "RoadRunner"
-          },
-          "instance": {
-            "type": "ueid",
-            "value": "AUyj5PUL8kjDl4cCDWj/0FyIdndRvyZFypI/V6mL7NKW"
-          }
-        },
-        "verification-keys": [
-          {
-            "type": "pkix-base64-key",
-            "value": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE6Vwqe7hy3O8Ypa+BUETLUjBNU3rEXVUyt9XHR7HJWLG7XTKQd9i1kVRXeBPDLFnfYru1/euxRnJM7H9UoFDLdA==\n-----END PUBLIC KEY-----"
-          }
-        ]
-      }
-    ]
-  }
-}
-``` 
+### comid-psa-integ-iakpub.json
+
+[comid-cca-realm-refval.json](https://github.com/veraison/cocli/blob/0d8fae8210ae527589792de2fba54442302380f7/data/comid/templates/comid-cca-mult-refval.json#L1-L93)
+
 **Key Points**
 
 -   **Integration with PSA**: The file name indicates integration with the Platform Security Architecture (PSA), emphasizing secure key management.
@@ -494,89 +170,8 @@ Below are the **seven** template files, each highlighting different aspects of C
 -   **Consistent Class Definition**: Maintains the same `class` details across verification keys, ensuring they are recognized as part of the same environment.
 
 ###  comid-psa-refval.json
-```
-{
-  "lang": "en-GB",
-  "tag-identity": {
-    "id": "43BBE37F-2E61-4B33-AED3-53CFF1428B16",
-    "version": 0
-  },
-  "entities": [
-    {
-      "name": "ACME Ltd.",
-      "regid": "https://acme.example",
-      "roles": [
-        "tagCreator",
-        "creator",
-        "maintainer"
-      ]
-    }
-  ],
-  "triples": {
-    "reference-values": [
-      {
-        "environment": {
-          "class": {
-            "id": {
-              "type": "psa.impl-id",
-              "value": "YWNtZS1pbXBsZW1lbnRhdGlvbi1pZC0wMDAwMDAwMDE="
-            },
-            "vendor": "ACME",
-            "model": "RoadRunner"
-          }
-        },
-        "measurements": [
-          {
-            "key": {
-              "type": "psa.refval-id",
-              "value": {
-                "label": "BL",
-                "version": "2.1.0",
-                "signer-id": "rLsRx+TaIXIFUjzkzhokWuGiOa48a/2eeHH35di66Gs="
-              }
-            },
-            "value": {
-              "digests": [
-                "sha-256:h0KPxSKAPTEGXnvOPPA/5HUJZjHl4Hu9eg/eYMTPJcc="
-              ]
-            }
-          },
-          {
-            "key": {
-              "type": "psa.refval-id",
-              "value": {
-                "label": "PRoT",
-                "version": "1.3.5",
-                "signer-id": "rLsRx+TaIXIFUjzkzhokWuGiOa48a/2eeHH35di66Gs="
-              }
-            },
-            "value": {
-              "digests": [
-                "sha-256:AmOCmYm2/ZVPcrqvL8ZLwuLwHWktTecphuqAj26ZgT8="
-              ]
-            }
-          },
-          {
-            "key": {
-              "type": "psa.refval-id",
-              "value": {
-                "label": "ARoT",
-                "version": "0.1.4",
-                "signer-id": "rLsRx+TaIXIFUjzkzhokWuGiOa48a/2eeHH35di66Gs="
-              }
-            },
-            "value": {
-              "digests": [
-                "sha-256:o6XnFfDMV0pzw/m+u2vCTzL/1bZ7OHJEwskJ2neaFHg="
-              ]
-            }
-          }
-        ]
-      }
-    ]
-  }
-}
-```
+
+https://github.com/veraison/cocli/blob/0d8fae8210ae527589792de2fba54442302380f7/data/comid/templates/comid-psa-refval.json#L1-L81
 
 **Key Points**
 
