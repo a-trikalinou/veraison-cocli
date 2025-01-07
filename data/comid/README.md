@@ -171,7 +171,7 @@ Below are the **seven** template files, each highlighting different aspects of C
 
 ###  comid-psa-refval.json
 
-https://github.com/veraison/cocli/blob/0d8fae8210ae527589792de2fba54442302380f7/data/comid/templates/comid-psa-refval.json#L1-L81
+- https://github.com/veraison/cocli/blob/0d8fae8210ae527589792de2fba54442302380f7/data/comid/templates/comid-psa-refval.json#L1
 
 **Key Points**
 
