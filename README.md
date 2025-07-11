@@ -32,6 +32,10 @@ To compile using local corim repo
 ```
 $ go build -o cocli .
 ```
+If compiling fails, verify that that workspace mode is off
+```
+$ export GOWORK=off
+```
 
 To configure auto-completion, use the `completion` subcommand. For example, if `bash` is your shell, you would do something like:
 ```
