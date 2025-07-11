@@ -2,6 +2,8 @@ module github.com/veraison/cocli
 
 go 1.23.0
 
+replace github.com/veraison/corim => ../
+
 require (
 	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.3.0
