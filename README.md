@@ -27,6 +27,12 @@ To install the `cocli` command, do:
 ```
 $ go install github.com/veraison/cocli@latest
 ```
+
+To compile using local corim repo
+```
+$ go build -o cocli .
+```
+
 To configure auto-completion, use the `completion` subcommand. For example, if `bash` is your shell, you would do something like:
 ```
 $ cocli completion bash > ~/.bash_completion.d/cocli
