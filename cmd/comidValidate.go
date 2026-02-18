@@ -1,4 +1,4 @@
-// Copyright 2021-2024 Contributors to the Veraison project.
+// Copyright 2021-2025 Contributors to the Veraison project.
 // SPDX-License-Identifier: Apache-2.0
 
 package cmd
@@ -9,12 +9,14 @@ import (
 
 	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
-	"github.com/veraison/corim/comid"
+	"github.com/veraison/corim/corim"
+	"github.com/veraison/eat"
 )
 
 var (
-	comidValidateFiles []string
-	comidValidateDirs  []string
+	comidValidateFiles   []string
+	comidValidateDirs    []string
+	comidValidateProfile string
 )
 
 var comidValidateCmd = NewComidValidateCmd()
@@ -67,6 +69,10 @@ func NewComidValidateCmd() *cobra.Command {
 		&comidValidateFiles, "file", "f", []string{}, "a CoMID file (in CBOR format)",
 	)
 
+	cmd.Flags().StringVarP(
+		&comidValidateProfile, "profile", "p", "", "an optional, scheme-specific profile applicable to all CoMID files",
+	)
+
 	cmd.Flags().StringArrayVarP(
 		&comidValidateDirs, "dir", "d", []string{}, "a directory containing CoMID files (in CBOR format)",
 	)
@@ -78,14 +84,22 @@ func validateComid(file string) error {
 	var (
 		data []byte
 		err  error
-		c    comid.Comid
+		p    *eat.Profile
 	)
 
 	if data, err = afero.ReadFile(fs, file); err != nil {
 		return fmt.Errorf("error loading CoMID from %s: %w", file, err)
 	}
 
-	if err = c.FromCBOR(data); err != nil {
+	if comidValidateProfile != "" {
+		p, err = eat.NewProfile(comidValidateProfile)
+		if err != nil {
+			return fmt.Errorf("error creating profile %q for CoMID: %w", comidValidateProfile, err)
+		}
+	}
+
+	c, err := corim.UnmarshalComidFromCBOR(data, p)
+	if err != nil {
 		return fmt.Errorf("error decoding CoMID from %s: %w", file, err)
 	}
 

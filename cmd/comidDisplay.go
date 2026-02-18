@@ -1,4 +1,4 @@
-// Copyright 2021-2024 Contributors to the Veraison project.
+// Copyright 2021-2025 Contributors to the Veraison project.
 // SPDX-License-Identifier: Apache-2.0
 
 package cmd
@@ -9,11 +9,13 @@ import (
 
 	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
+	"github.com/veraison/eat"
 )
 
 var (
-	comidDisplayFiles []string
-	comidDisplayDirs  []string
+	comidDisplayFiles   []string
+	comidDisplayDirs    []string
+	comidDisplayProfile string
 )
 
 var comidDisplayCmd = NewComidDisplayCmd()
@@ -65,6 +67,10 @@ func NewComidDisplayCmd() *cobra.Command {
 		&comidDisplayFiles, "file", "f", []string{}, "a CoMID file (in CBOR format)",
 	)
 
+	cmd.Flags().StringVarP(
+		&comidDisplayProfile, "profile", "p", "", "an optional, scheme-specific profile applicable to all CoMID files",
+	)
+
 	cmd.Flags().StringArrayVarP(
 		&comidDisplayDirs, "dir", "d", []string{}, "a directory containing CoMID files (in CBOR format)",
 	)
@@ -75,6 +81,7 @@ func NewComidDisplayCmd() *cobra.Command {
 func displayComidFile(file string) error {
 	var (
 		data []byte
+		p    *eat.Profile
 		err  error
 	)
 
@@ -82,8 +89,14 @@ func displayComidFile(file string) error {
 		return fmt.Errorf("error loading CoMID from %s: %w", file, err)
 	}
 
+	if comidDisplayProfile != "" {
+		p, err = eat.NewProfile(comidDisplayProfile)
+		if err != nil {
+			return fmt.Errorf("error creating profile %q from template: %w", comidDisplayProfile, err)
+		}
+	}
 	// use file name as heading
-	return printComid(data, ">> ["+file+"]")
+	return printComid(data, p, ">> ["+file+"]")
 }
 
 func checkComidDisplayArgs() error {

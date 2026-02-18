@@ -1,4 +1,4 @@
-// Copyright 2021-2024 Contributors to the Veraison project.
+// Copyright 2021-2026 Contributors to the Veraison project.
 // SPDX-License-Identifier: Apache-2.0
 
 package cmd
@@ -13,6 +13,9 @@ var (
 	minimalCorimTemplate = []byte(`{
 		"corim-id": "5c57e8f4-46cd-421b-91c9-08cf93e13cfc"
 	}`)
+
+	//go:embed testcases/test-comid.json
+	testComidTemplate []byte
 	badCBOR = comid.MustHexDecode(nil, "ffff")
 	// a "tag-id only" CoMID {1: {0: h'366D0A0A598845ED84882F2A544F6242'}}
 	invalidComid = comid.MustHexDecode(nil,
@@ -28,8 +31,10 @@ var (
 	testCorimInvalid = comid.MustHexDecode(nil,
 		"d901f5a100505c57e8f446cd421b91c908cf93e13cfc",
 	)
-	testMetaInvalid = []byte("{}")
-	testMetaValid   = []byte(`{
+	testProfile        = "2.16.840.1.113741.1.16.1"
+	testInvalidProfile = "example"
+	testMetaInvalid    = []byte("{}")
+	testMetaValid      = []byte(`{
 		"signer": {
 			"name": "ACME Ltd signing key",
 			"uri": "https://acme.example"

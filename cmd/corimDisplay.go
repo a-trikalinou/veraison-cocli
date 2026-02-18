@@ -1,4 +1,4 @@
-// Copyright 2021-2024 Contributors to the Veraison project.
+// Copyright 2021-2025 Contributors to the Veraison project.
 // SPDX-License-Identifier: Apache-2.0
 
 package cmd
@@ -12,6 +12,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/veraison/corim/corim"
 	"github.com/veraison/corim/cots"
+	"github.com/veraison/eat"
 )
 
 var (
@@ -79,7 +80,7 @@ func displaySignedCorim(s corim.SignedCorim, corimFile string, showTags bool) er
 
 	if showTags {
 		fmt.Println("Tags:")
-		displayTags(s.UnsignedCorim.Tags)
+		displayTags(s.UnsignedCorim.Tags, s.UnsignedCorim.Profile)
 	}
 
 	return nil
@@ -96,7 +97,7 @@ func displayUnsignedCorim(u corim.UnsignedCorim, corimFile string, showTags bool
 
 	if showTags {
 		fmt.Println("Tags:")
-		displayTags(u.Tags)
+		displayTags(u.Tags, u.Profile)
 	}
 
 	return nil
@@ -131,13 +132,13 @@ func display(corimFile string, showTags bool) error {
 }
 
 // displayTags processes and displays embedded tags within a CoRIM.
-func displayTags(tags []corim.Tag) {
+func displayTags(tags []corim.Tag, p *eat.Profile) {
 	for i, t := range tags {
 		hdr := fmt.Sprintf(">> [ %d ]", i)
 
 		switch t.Number {
 		case corim.ComidTag:
-			if err := printComid(t.Content, hdr); err != nil {
+			if err := printComid(t.Content, p, hdr); err != nil {
 				fmt.Printf(">> skipping malformed CoMID tag at index %d: %v\n", i, err)
 			}
 		case corim.CoswidTag:

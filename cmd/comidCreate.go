@@ -1,4 +1,4 @@
-// Copyright 2021-2024 Contributors to the Veraison project.
+// Copyright 2021-2025 Contributors to the Veraison project.
 // SPDX-License-Identifier: Apache-2.0
 
 package cmd
@@ -10,11 +10,14 @@ import (
 	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
 	"github.com/veraison/corim/comid"
+	"github.com/veraison/corim/corim"
+	"github.com/veraison/eat"
 )
 
 var (
 	comidCreateFiles     []string
 	comidCreateDirs      []string
+	comidCreateProfile   string
 	comidCreateOutputDir string
 )
 
@@ -27,11 +30,13 @@ func NewComidCreateCmd() *cobra.Command {
 		Long: `create one or more CBOR-encoded CoMID(s) from the supplied JSON template(s)
 
 	Create CoMIDs from templates t1.json and t2.json, plus any template found in
-	the templates/ directory.  Save them to the current working directory.
+	the templates/ directory, with an optional supplied profile.
+	Save them to the current working directory.
 	
 		cocli comid create --template=t1.json \
 	    			--template=t2.json \
-	    			--template-dir=templates
+	    			--template-dir=templates \
+                    --profile="tag:arm.com,2024:cca_platform#1.1.0"
 	  
 	Create one CoMID from template t3.json and save it to the comids/ directory.
 	Note that the output directory must exist.
@@ -79,6 +84,10 @@ func NewComidCreateCmd() *cobra.Command {
 	)
 
 	cmd.Flags().StringVarP(
+		&comidCreateProfile, "profile", "p", "", "an optional scheme specific profile applicable to all CoMID JSON templates",
+	)
+
+	cmd.Flags().StringVarP(
 		&comidCreateOutputDir, "output-dir", "o", ".", "directory where the created files are stored",
 	)
 
@@ -96,7 +105,8 @@ func templateToCBOR(tmplFile, outputDir string) (string, error) {
 	var (
 		tmplData, cborData []byte
 		cborFile           string
-		c                  comid.Comid
+		c                  *comid.Comid
+		p                  *eat.Profile
 		err                error
 	)
 
@@ -104,7 +114,15 @@ func templateToCBOR(tmplFile, outputDir string) (string, error) {
 		return "", fmt.Errorf("error loading template from %s: %w", tmplFile, err)
 	}
 
-	if err = c.FromJSON(tmplData); err != nil {
+	if comidCreateProfile != "" {
+		p, err = eat.NewProfile(comidCreateProfile)
+		if err != nil {
+			return "", fmt.Errorf("error creating profile %q for template: %w", comidCreateProfile, err)
+		}
+	}
+
+	c, err = corim.UnmarshalComidFromJSON(tmplData, p)
+	if err != nil {
 		return "", fmt.Errorf("error decoding template from %s: %w", tmplFile, err)
 	}
 

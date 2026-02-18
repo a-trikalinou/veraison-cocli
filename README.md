@@ -28,6 +28,12 @@ To install the `cocli` command, do:
 $ go install github.com/veraison/cocli@latest
 ```
 
+> **NOTE:** to install a version of `cocli` that understands the old CoRIM wire format (up to draft-ietf-rats-corim-06), use the following: 
+> ```
+> $ go install github.com/veraison/cocli@v0.0.1-compat
+> ```
+> This is required in order to parse the CoRIM manifests that are currently being issued by NVIDIA and Solidigm.
+
 To compile using local corim repo
 ```
 $ go build -o cocli .
@@ -558,9 +564,9 @@ Further, it is required to supply the media type of the content via the
 `--media-type` switch (abbrev. `-m`)
 ```
 $ cocli corim submit \
-    --corim-file data/corim/unsigned-corim.cbor \
-    --api-server "https://veraison.example/endorsement-provisioning/v1/submit" \
-    --media-type "application/corim-unsigned+cbor; profile=http://arm.com/psa/iot/1"
+  --corim-file data/corim/unsigned-corim.cbor \
+  --api-server "https://veraison.example/endorsement-provisioning/v1/submit" \
+  --media-type "application/corim-unsigned+cbor; profile=tag:arm.com,2025:psa#1.0.0"
 
 >> "unsigned-corim.cbor" submit ok
 ```

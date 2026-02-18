@@ -1,4 +1,4 @@
-// Copyright 2021 Contributors to the Veraison project.
+// Copyright 2021-2025 Contributors to the Veraison project.
 // SPDX-License-Identifier: Apache-2.0
 
 package cmd
@@ -10,6 +10,7 @@ import (
 	"github.com/spf13/afero"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/veraison/corim/profiles/tdx"
 )
 
 func Test_ComidDisplayCmd_unknown_argument(t *testing.T) {
@@ -93,6 +94,25 @@ func Test_ComidDisplayCmd_file_with_valid_comid_from_dir(t *testing.T) {
 
 	args := []string{
 		"--dir=testdir",
+	}
+	cmd.SetArgs(args)
+
+	err = cmd.Execute()
+	assert.NoError(t, err)
+}
+
+func Test_ComidDisplayCmd_With_profile_with_valid_comid(t *testing.T) {
+	var err error
+	profile := "--profile=" + testProfile
+	cmd := NewComidDisplayCmd()
+
+	fs = afero.NewMemMapFs()
+	err = afero.WriteFile(fs, "ok.cbor", []byte(tdx.ComidSeamRefVal), 0644)
+	require.NoError(t, err)
+
+	args := []string{
+		"--file=ok.cbor",
+		profile,
 	}
 	cmd.SetArgs(args)
 

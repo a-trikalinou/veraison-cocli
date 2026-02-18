@@ -1,4 +1,4 @@
-// Copyright 2021-2024 Contributors to the Veraison project.
+// Copyright 2021-2025 Contributors to the Veraison project.
 // SPDX-License-Identifier: Apache-2.0
 
 package cmd
@@ -50,7 +50,7 @@ func NewCorimCreateCmd() *cobra.Command {
 	                   --comid=comid1.cbor \
 	                   --coswid=coswid1.cbor \
 	                   --coswid=dir/coswid2.cbor \
-					   --cots=cots1.cbor
+					   --cots=cots1.cbor         \
 	                   --output=corim.cbor
 	`,
 
@@ -140,11 +140,12 @@ func corimTemplateToCBOR(tmplFile string, comidFiles, coswidFiles, cotsFiles []s
 		return "", fmt.Errorf("error decoding template from %s: %w", tmplFile, err)
 	}
 
+	p := c.Profile
 	// append CoMID(s)
 	for _, comidFile := range comidFiles {
 		var (
 			comidCBOR []byte
-			m         comid.Comid
+			m         *comid.Comid
 		)
 
 		comidCBOR, err = afero.ReadFile(fs, comidFile)
@@ -152,12 +153,12 @@ func corimTemplateToCBOR(tmplFile string, comidFiles, coswidFiles, cotsFiles []s
 			return "", fmt.Errorf("error loading CoMID from %s: %w", comidFile, err)
 		}
 
-		err = m.FromCBOR(comidCBOR)
+		m, err := corim.UnmarshalComidFromCBOR(comidCBOR, p)
 		if err != nil {
 			return "", fmt.Errorf("error loading CoMID from %s: %w", comidFile, err)
 		}
 
-		if c.AddComid(&m) == nil {
+		if c.AddComid(m) == nil {
 			return "", fmt.Errorf(
 				"error adding CoMID from %s (check its validity using the %q sub-command)",
 				comidFile, "comid validate",

@@ -1,4 +1,4 @@
-// Copyright 2021-2024 Contributors to the Veraison project.
+// Copyright 2021-2025 Contributors to the Veraison project.
 // SPDX-License-Identifier: Apache-2.0
 
 package cmd
@@ -10,8 +10,9 @@ import (
 	"strings"
 
 	"github.com/spf13/afero"
-	"github.com/veraison/corim/comid"
+	"github.com/veraison/corim/corim"
 	"github.com/veraison/corim/cots"
+	"github.com/veraison/eat"
 	"github.com/veraison/swid"
 )
 
@@ -67,8 +68,28 @@ func printJSONFromCBOR(fcl FromCBORLoader, cbor []byte, heading string) error {
 	return nil
 }
 
-func printComid(cbor []byte, heading string) error {
-	return printJSONFromCBOR(&comid.Comid{}, cbor, heading)
+func printComidWithExtensions(cbor []byte, profile *eat.Profile, heading string) error {
+	var (
+		err error
+		j   []byte
+	)
+	c, err := corim.UnmarshalComidFromCBOR(cbor, profile)
+	if err != nil {
+		return fmt.Errorf("error decoding CoMID from CBOR: %w", err)
+	}
+
+	indent := "  "
+	if j, err = json.MarshalIndent(c, "", indent); err != nil {
+		return fmt.Errorf("JSON encoding failed: %w", err)
+	}
+
+	fmt.Println(heading)
+	fmt.Println(string(j))
+	return nil
+}
+
+func printComid(cbor []byte, profile *eat.Profile, heading string) error {
+	return printComidWithExtensions(cbor, profile, heading)
 }
 
 func printCoswid(cbor []byte, heading string) error {
